@@ -1,2 +1,1 @@
-# hear
-high-variance electrode artifact removal (HEAR) algorithm
+# high-variance electrode artifact removal (HEAR) algorithm
