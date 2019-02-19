@@ -1,6 +1,6 @@
 # high-variance electrode artifact removal (HEAR) algorithm
 
-HEAR is a simple, yet efficient algorithm to remove transinet, high-variance artifacts from multivariate time-series signals (e.g., electroencephalographic (EEG) signals).
+HEAR is a simple, yet efficient algorithm to remove transient, high-variance artifacts from multivariate time-series signals (e.g., electroencephalographic (EEG) signals).
 
 ### Reference:
 
