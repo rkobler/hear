@@ -123,14 +123,19 @@ classdef HEAR < handle
             p_art = max(p_art_ext, [], 1);
             
             varargout{1} = p_art;
-            varargout{2} = p_art_ext;
             
             if (any(isnan(obj.D(:))) || ~ismatrix(obj.D) || ...
                 diff(size(obj.D)) ~= 0 || n_chans ~= size(obj.D,1))  ...
-                && nargout > 2
+                && nargout > 1
 
                 error('Expecting corrected output without a valid channel interpolation matrix.');
-            elseif nargout > 2
+            elseif nargout > 1
+                
+                % estimate the probability that an artifact contaminated channel can not be
+                % corrected by its neighbors
+                varargout{2} = max(p_art_ext.*(obj.D*p_art_ext),[],1);
+                
+                % do the correction steop
                 data_c = p_art_ext .* (obj.D * data(:,:)) + (1 - p_art_ext) .* data(:,:);
                 varargout{3} = data_c;
             end

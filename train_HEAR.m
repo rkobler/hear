@@ -14,12 +14,10 @@ if length(st) < 2
     close all
     clc
 
-    addpath(genpath('../library'));
-
     % parameters
     file_name = 'demo_simrest';    
     
-    is_causal = false;
+    is_causal = true;
 
     data_root_dir = './';
 end
@@ -38,8 +36,6 @@ eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
 EEG = pop_select(EEG, 'channel', eeg_chan_idxs);
 
 %% load the channels interpolation distance matrix
-
-EEG = pop_select(EEG, 'channel', eeg_chan_idxs);
 
 D = utl_chaninterpmatrix(EEG.chanlocs, 4);
 

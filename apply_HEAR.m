@@ -14,8 +14,6 @@ if length(st) < 2
     close all
     clc
 
-    addpath(genpath('../library'));
-
     % parameters
     file_name = 'demo_simreach';
     
@@ -42,28 +40,24 @@ load([data_root_dir 'mdl_HEAR.mat'], 'hear_mdl');
 data2 = EEG.data;
 
 % detect and remove transient, high variance artifacts
-[p_art, p_art_ext, EEG.data] = hear_mdl.apply(EEG.data(:,:));
-
-% estimate the probability that an artifact contaminated channel can not be
-% corrected by its neighbors
-p_nc_art = max(p_art_ext.*(hear_mdl.D*p_art_ext),[],1);
+[p_art, p_confidence, EEG.data] = hear_mdl.apply(EEG.data(:,:));
 
 % adjust to epoched datasets (optionally)
 EEG.data = reshape(EEG.data, EEG.nbchan, EEG.pnts, EEG.trials);
 p_art = reshape(p_art, 1, EEG.pnts, EEG.trials);
-p_nc_art = reshape(p_nc_art, 1, EEG.pnts, EEG.trials);
+p_confidence = reshape(p_confidence, 1, EEG.pnts, EEG.trials);
 
 EEG.chanlocs(end+1).labels = 'p art';
 EEG.chanlocs(end).type = 'ART';
 EEG.chanlocs(end).urchan = [];
 EEG.chanlocs(end).ref = [];
 
-EEG.chanlocs(end+1).labels = 'p nc art';
+EEG.chanlocs(end+1).labels = 'confidence';
 EEG.chanlocs(end).type = 'ART';
 EEG.chanlocs(end).urchan = [];
 EEG.chanlocs(end).ref = [];
 
-EEG.data = cat(1, EEG.data, p_art*100, p_nc_art*100);
+EEG.data = cat(1, EEG.data, p_art*100, p_confidence*100);
 EEG.nbchan = EEG.nbchan + 2;
 
 data2 = cat(1, data2, zeros(2, EEG.pnts, EEG.trials));
