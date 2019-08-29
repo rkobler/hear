@@ -40,7 +40,11 @@ EEG = pop_select(EEG, 'trial', 1:8);
 
 EEG.etc = struct;
 
-eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
+if exist('eeg_chantype', 'file') % eeglab version 14 and before
+    eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
+else % eeglab version 2019
+    eeg_chan_idxs = eeg_decodechan(EEG.chanlocs, 'EEG', 'type');
+end
 
 EEG = pop_select(EEG, 'channel', eeg_chan_idxs);
 

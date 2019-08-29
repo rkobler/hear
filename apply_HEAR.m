@@ -36,7 +36,11 @@ EEG = pop_loadset([file_name '.set'], data_root_dir);
 [ALLEEG, EEG, CURRENTSET] = eeg_store({}, EEG);
 ALL_DS_IDX = CURRENTSET;
 
-eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
+if exist('eeg_chantype', 'file') % eeglab version 14 and before
+    eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
+else % eeglab version 2019
+    eeg_chan_idxs = eeg_decodechan(EEG.chanlocs, 'EEG', 'type');
+end
 
 EEG = pop_select(EEG, 'channel', eeg_chan_idxs);
 %% load the artifact detection model
@@ -70,8 +74,6 @@ EEG.data = cat(1, EEG.data, p_art*100, p_confidence*100);
 EEG.nbchan = EEG.nbchan + 2;
 
 data2 = cat(1, data2, zeros(2, EEG.pnts, EEG.trials));
-
-eeg_chan_idxs = eeg_chantype(EEG, 'EEG');
 
 %% plotting
 
