@@ -5,7 +5,7 @@ HEAR is a simple, yet efficient algorithm to remove transient, high-variance art
 ### Reference:
 
 Kobler, R. J., Sburlea, A. I., Mondini, V. & Müller-Putz, G. R. HEAR to remove pops and drifts: the high-variance electrode artifact removal (HEAR) algorithm. 
-In Proceedings of the Annual International Conference of the IEEE Engineering in Medicine and Biology Society, EMBS, 2019 (accepted)
+In Proceedings of the Annual International Conference of the IEEE Engineering in Medicine and Biology Society, EMBS, 2019 [accepted version](https://arxiv.org/abs/1907.12354)
 
 HEAR can be applied offline and online.
 The repository contains a reference implementation in Matlab and a dataset of simulated EEG signals.
